@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - 6.0
+services:
+  - redis-server
+after_script:
+  - "npm install coveralls@2.10.0 && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+env:
+  - REDIS_CONNECT_TEST=redis://127.0.0.1:6379

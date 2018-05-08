@@ -1,0 +1,53 @@
+@keyframes jcameras-player-dash {
+  from {
+    stroke-dashoffset: 5;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.jcameras-player {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+
+  #mouse-left,
+  #mouse-right,
+  #mouse-middle {
+    path {
+      stroke: black;
+      fill: red;
+    }
+  }
+  #mouse {
+    path {
+      fill: white;
+      &:nth-child(1) {
+        fill: black;
+      }
+    }
+  }
+  .locus-path {
+    stroke: black;
+    fill: none;
+    stroke-dasharray: 3 2;
+    animation: jcameras-player-dash 0.5s linear infinite;
+  }
+  .drag-path {
+    stroke: steelblue;
+    stroke-width: 3;
+    fill: none;
+    stroke-dasharray: 5 2;
+  }
+  .moving-points {
+    circle {
+      stroke: none;
+      fill: black;
+      opacity: 0.7;
+    }
+  }
+}
