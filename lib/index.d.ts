@@ -1,7 +1,3 @@
-export interface IPlayerOptions {
-    maxRecords?: number;
-    hiddenCurrent?: boolean;
-}
 declare class Player {
     svg: SVGElement;
     style: HTMLStyleElement;
@@ -21,15 +17,11 @@ declare class Player {
     render(): void;
     push(record: IRecordEvent): void;
 }
-export declare const events: {
-    mousemove: string;
-    mousedown: string;
-    mouseup: string;
-    contextmenu: string;
-    click: string;
-    dblclick: string;
-    mousewheel: string;
-};
+export interface IPlayerOptions {
+    maxRecords?: number;
+    hiddenCurrent?: boolean;
+}
+export declare const events: string[];
 export interface IRecordEvent {
     /**
      * 事件类型

@@ -1,4 +1,4 @@
-/*<jdists encoding="fndep" depend="Player" import="./player.ts">*/
+/*<jdists encoding="fndep" depend="Player,IPlayerOptions" import="./player.ts">*/
 import { Player } from './player'
 /*</jdists>*/
 

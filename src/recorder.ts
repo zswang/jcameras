@@ -1,15 +1,15 @@
 /*<function name="Recorder">*/
-export const events = {
-  mousemove: 'm',
-  mousedown: 'd',
-  mouseup: 'u',
+export const events = [
+  'mousemove',
+  'mousedown',
+  'mouseup',
 
-  contextmenu: 'r',
-  click: 'c',
-  dblclick: 'l',
+  'contextmenu',
+  'click',
+  'dblclick',
 
-  mousewheel: 'w',
-}
+  'mousewheel',
+]
 
 export interface IRecordEvent {
   /**
@@ -167,7 +167,7 @@ class Recorder {
     if (this.options.onStart) {
       this.options.onStart()
     }
-    Object.keys(events).forEach(type => {
+    events.forEach(type => {
       document.addEventListener(type, this.handleEvent)
     })
   }
@@ -177,7 +177,7 @@ class Recorder {
     if (this.options.onEnd) {
       this.options.onEnd()
     }
-    Object.keys(events).forEach(type => {
+    events.forEach(type => {
       document.removeEventListener(type, this.handleEvent)
     })
   }

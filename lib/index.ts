@@ -1,8 +1,4 @@
 /*<function name="Player">*/
-export interface IPlayerOptions {
-  maxRecords?: number
-  hiddenCurrent?: boolean
-}
 class Player {
   svg: SVGElement
   style: HTMLStyleElement
@@ -27,7 +23,7 @@ class Player {
       return
     }
     let div = document.createElement('div')
-    div.innerHTML = `<style>@-webkit-keyframes jcameras-player-dash{from{stroke-dashoffset:5}to{stroke-dashoffset:0}}@keyframes jcameras-player-dash{from{stroke-dashoffset:5}to{stroke-dashoffset:0}}.jcameras-player{pointer-events:none;position:absolute;left:0;top:0;width:100%;box-sizing:border-box}.jcameras-player #mouse-left path,.jcameras-player #mouse-middle path,.jcameras-player #mouse-right path{stroke:#000;fill:red}.jcameras-player #mouse path{fill:#fff}.jcameras-player #mouse path:nth-child(1){fill:#000}.jcameras-player .locus-path{stroke:#000;fill:none;stroke-dasharray:3 2;-webkit-animation:jcameras-player-dash .5s linear infinite;animation:jcameras-player-dash .5s linear infinite}.jcameras-player .drag-path{stroke:#4682b4;stroke-width:3;fill:none;stroke-dasharray:5 2}.jcameras-player .moving-points circle{stroke:none;fill:#000;opacity:.7}</style><svg class="jcameras-player" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    div.innerHTML = `<style>@-webkit-keyframes jcameras-player-dash{from{stroke-dashoffset:5}to{stroke-dashoffset:0}}@keyframes jcameras-player-dash{from{stroke-dashoffset:5}to{stroke-dashoffset:0}}.jcameras-player{z-index:2147483647;pointer-events:none;position:absolute;left:0;top:0;width:100%;box-sizing:border-box}.jcameras-player #mouse-left path,.jcameras-player #mouse-middle path,.jcameras-player #mouse-right path{stroke:#000;fill:red}.jcameras-player #mouse path{fill:#fff}.jcameras-player #mouse path:nth-child(1){fill:#000}.jcameras-player .locus-path{stroke:#000;fill:none;stroke-dasharray:3 2;-webkit-animation:jcameras-player-dash .5s linear infinite;animation:jcameras-player-dash .5s linear infinite}.jcameras-player .drag-path{stroke:#4682b4;stroke-width:3;fill:none;stroke-dasharray:5 2}.jcameras-player .moving-points circle{stroke:none;fill:#000;opacity:.7}</style><svg class="jcameras-player" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <def>
     <g id="mouse" fill="#000000" fill-rule="nonzero">
       <path d="M27.78125,0 C24.5932617,0 22,2.59375 22,5.78125 L22,16.2519531 C10.0558472,16.7773437 0.5,26.6556396 0.5,38.7265625 L0.5,57.5 C0.5,69.90625 10.5932617,80 23,80 C35.4067383,80 45.5,69.90625 45.5,57.5 L45.5,38.7265625 C45.5,26.6556396 35.9441528,16.7773437 24,16.2519531 L24,5.78125 C24,3.6962891 25.6962891,2 27.78125,2 C29.8662109,2 31.5625,3.6962891 31.5625,5.78125 L31.5625,8.9345703 C31.5625,12.1220703 34.1557617,14.7158203 37.34375,14.7158203 C40.5317383,14.7158203 43.125,12.1220703 43.125,8.9345703 L43.125,1.3164062 C43.125,0.7636718 42.6772461,0.3164062 42.125,0.3164062 C41.5727539,0.3164062 41.125,0.7636718 41.125,1.3164062 L41.125,8.9345703 C41.125,11.0195312 39.4287109,12.7158203 37.34375,12.7158203 C35.2587891,12.7158203 33.5625,11.0195312 33.5625,8.9345703 L33.5625,5.78125 C33.5625,2.59375 30.9692383,0 27.78125,0 Z M23,31.7060547 C24.9296875,31.7060547 26.5,33.2763672 26.5,35.2060547 L26.5,40.5390625 C26.5,42.46875 24.9296875,44.0390625 23,44.0390625 C21.0703125,44.0390625 19.5,42.46875 19.5,40.5390625 L19.5,35.2060547 C19.5,33.2763672 21.0703125,31.7060547 23,31.7060547 Z M22,18.2772217 L22,29.8016358 C19.4437866,30.2738648 17.5,32.5156861 17.5,35.2060547 L17.5,39 L2.5,39 L2.5,38.7265625 C2.5,27.760376 11.1621094,18.803894 22,18.2772217 Z M23,78 C11.6962891,78 2.5,68.8037109 2.5,57.5 L2.5,41 L17.5233765,41 C17.7588501,43.8169556 20.1228638,46.0390625 23,46.0390625 C25.8771362,46.0390625 28.2411499,43.8169556 28.4766235,41 L43.5,41 L43.5,57.5 C43.5,68.8037109 34.3037109,78 23,78 Z M43.5,38.7265625 L43.5,39 L28.5,39 L28.5,35.2060547 C28.5,32.515686 26.5562134,30.2738648 24,29.8016358 L24,18.2772217 C34.8378906,18.803894 43.5,27.760376 43.5,38.7265625 Z" />
@@ -161,16 +157,21 @@ class Player {
     this.render()
   }
 } /*</function>*/
+/*<function name="IPlayerOptions">*/
+export interface IPlayerOptions {
+  maxRecords?: number
+  hiddenCurrent?: boolean
+} /*</function>*/
 /*<function name="Recorder">*/
-export const events = {
-  mousemove: 'm',
-  mousedown: 'd',
-  mouseup: 'u',
-  contextmenu: 'r',
-  click: 'c',
-  dblclick: 'l',
-  mousewheel: 'w',
-}
+export const events = [
+  'mousemove',
+  'mousedown',
+  'mouseup',
+  'contextmenu',
+  'click',
+  'dblclick',
+  'mousewheel',
+]
 export interface IRecordEvent {
   /**
    * 事件类型
@@ -314,7 +315,7 @@ class Recorder {
     if (this.options.onStart) {
       this.options.onStart()
     }
-    Object.keys(events).forEach(type => {
+    events.forEach(type => {
       document.addEventListener(type, this.handleEvent)
     })
   }
@@ -323,7 +324,7 @@ class Recorder {
     if (this.options.onEnd) {
       this.options.onEnd()
     }
-    Object.keys(events).forEach(type => {
+    events.forEach(type => {
       document.removeEventListener(type, this.handleEvent)
     })
   }

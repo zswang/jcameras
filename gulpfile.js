@@ -13,7 +13,7 @@ const replace = require('gulp-replace')
 const rename = require('gulp-rename')
 const pkg = require('./package')
 
-gulp.task('build', function() {
+gulp.task('build', () => {
   var tsResult = gulp
     .src('./src/index.ts')
     .pipe(jdists())
@@ -51,7 +51,7 @@ gulp.task('build', function() {
   ])
 })
 
-gulp.task('uglify', function() {
+gulp.task('uglify', () => {
   gulp
     .src(`lib/index.js`)
     .pipe(uglify())
@@ -59,7 +59,17 @@ gulp.task('uglify', function() {
     .pipe(gulp.dest('lib'))
 })
 
-gulp.task('example', function() {
+gulp.task('injection', () => {
+  gulp
+    .src(`injection.js`)
+    .pipe(jdists())
+    .pipe(uglify())
+    .pipe(rename(`injection.min.js`))
+    .pipe(replace(/^!/, 'void '))
+    .pipe(gulp.dest('lib'))  
+})
+
+gulp.task('example', () => {
   return gulp
     .src('src/**.ts')
     .pipe(

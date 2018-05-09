@@ -2,12 +2,13 @@
 import { IRecordEvent } from './recorder'
 /*</remove>*/
 
-/*<function name="Player">*/
+/*<function name="IPlayerOptions">*/
 export interface IPlayerOptions {
   maxRecords?: number
   hiddenCurrent?: boolean
-}
+} /*</function>*/
 
+/*<function name="Player">*/
 class Player {
   svg: SVGElement
   style: HTMLStyleElement

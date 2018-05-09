@@ -1,6 +1,6 @@
 {
   "name": "jcameras",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "Mouse behavior recording and playing.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -8,9 +8,10 @@
     "_update_version": "node version.js",
     "_dist": "gulp dist",
     "test": "istanbul cover --hook-run-in-context node_modules/mocha/bin/_mocha -- -R spec",
+    "_injection": "gulp injection",
     "example": "gulp example",
     "mocha": "mocha",
-    "dist": "npm run _update_version && npm run example && npm run _dist && npm run test"
+    "dist": "npm run _update_version && npm run example && npm run _dist && npm run _injection && npm run test"
   },
   "author": {
     "name": "zswang",
