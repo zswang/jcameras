@@ -4,6 +4,7 @@ declare class Player {
     options: IPlayerOptions;
     records: IRecordEvent[];
     locusPath: SVGPathElement;
+    locusBackPath: SVGPathElement;
     movingPoints: SVGGElement;
     clickPoints: SVGGElement;
     menuPoints: SVGGElement;

@@ -34,14 +34,18 @@
       }
     }
   }
-  .locus-path {
+  .locus-path,
+  .locus-back-path {
     stroke: black;
     fill: none;
-    stroke-dasharray: 3 2;
+  }
+  .locus-back-path {
+    stroke-dasharray: 4 4;
     animation: jcameras-player-dash 0.5s linear infinite;
+    stroke: white;
   }
   .drag-path {
-    stroke: steelblue;
+    stroke: red;
     stroke-width: 3;
     fill: none;
     stroke-dasharray: 5 2;

@@ -141,7 +141,8 @@ class Recorder {
       if (this.lastRecord) {
         // 有历史记录
         if (
-          this.lastRecord.target === target &&
+          this.lastRecord.target === record.target &&
+          this.lastRecord.button === record.button &&
           time - this.lastRecord.time <= this.options.thinning
         ) {
           this.timer = setTimeout(() => {

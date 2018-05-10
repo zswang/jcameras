@@ -17,6 +17,7 @@ class Player {
   records: IRecordEvent[] = []
 
   locusPath: SVGPathElement
+  locusBackPath: SVGPathElement
   movingPoints: SVGGElement
   clickPoints: SVGGElement
   menuPoints: SVGGElement
@@ -46,11 +47,9 @@ class Player {
     document.body.appendChild(this.svg)
 
     this.locusPath = this.svg.querySelector('.locus-path')
+    this.locusBackPath = this.svg.querySelector('.locus-back-path')
     this.movingPoints = this.svg.querySelector('.moving-points')
     this.clickPoints = this.svg.querySelector('.click-points')
-    this.menuPoints = this.svg.querySelector('.menu-points')
-    this.wheelPoints = this.svg.querySelector('.wheel-points')
-    this.doublePoints = this.svg.querySelector('.double-points')
 
     this.dragPath = this.svg.querySelector('.drag-path')
     this.current = this.svg.querySelector('.current')
@@ -78,10 +77,7 @@ class Player {
     let locus = []
     let click = []
     let moving = []
-    let menu = []
-    let wheel = []
     let drag = []
-    let double = []
     let point
     let downPoint
     let upPoint
@@ -94,14 +90,34 @@ class Player {
         x: item.position.x - box.left + targetBox.left,
         y: item.position.y - box.top + targetBox.top,
       }
+      if (
+        point.x < 0 ||
+        point.y < 0 ||
+        point.x > box.width ||
+        point.y > box.height
+      ) {
+        return
+      }
       locus.push(`${point.x},${point.y}`)
       switch (item.type) {
         case 'dblclick':
-          double.push(
+          click.push(
             `<use xlink:href="#mouse-double" transform="translate(${point.x},${
               point.y
             })" />`
           )
+          break
+        case 'mousedown':
+          downPoint = point
+          break
+        case 'mouseup':
+          upPoint = point
+          if (downPoint) {
+            drag.push(
+              `M ${downPoint.x},${downPoint.y} L ${upPoint.x},${upPoint.y}`
+            )
+            downPoint = null
+          }
           break
         case 'mousemove':
           moving.push(`<circle r="1.5" cx="${point.x}" cy="${point.y}" />`)
@@ -111,7 +127,7 @@ class Player {
             }
             upPoint = point
           } else {
-            if (downPoint) {
+            if (downPoint && upPoint) {
               drag.push(
                 `M ${downPoint.x},${downPoint.y} L ${upPoint.x},${upPoint.y}`
               )
@@ -127,14 +143,14 @@ class Player {
           )
           break
         case 'mousewheel':
-          wheel.push(
+          click.push(
             `<use xlink:href="#mouse-middle" transform="translate(${point.x},${
               point.y
             })" />`
           )
           break
         case 'contextmenu':
-          menu.push(
+          click.push(
             `<use xlink:href="#mouse-right" transform="translate(${point.x},${
               point.y
             })" />`
@@ -142,17 +158,15 @@ class Player {
           break
       }
     })
-    if (downPoint) {
+    if (downPoint && upPoint) {
       drag.push(`M ${downPoint.x},${downPoint.y} L ${upPoint.x},${upPoint.y}`)
     }
 
     this.locusPath.setAttribute('d', `M${locus.join(' ')}`)
+    this.locusBackPath.setAttribute('d', `M${locus.join(' ')}`)
     this.dragPath.setAttribute('d', drag.join(' '))
     this.movingPoints.innerHTML = moving.join('')
     this.clickPoints.innerHTML = click.join('')
-    this.menuPoints.innerHTML = menu.join('')
-    this.wheelPoints.innerHTML = wheel.join('')
-    this.doublePoints.innerHTML = double.join('')
 
     if (point && !this.options.hiddenCurrent) {
       this.current.setAttribute('transform', `translate(${point.x},${point.y})`)

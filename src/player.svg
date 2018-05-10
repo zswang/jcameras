@@ -46,11 +46,9 @@
     </g>
   </def>
   <path class="locus-path" />
+  <path class="locus-back-path" />
   <g class="moving-points" />
   <g class="click-points" />
-  <g class="double-points" />
-  <g class="menu-points" />
-  <g class="wheel-points" />
   <path class="drag-path" />
   <g class="current" transform="translate(-1000,-1000)"><use xlink:href="#mouse-pointer" /></g>
   <!--remove desc="preview"-->
