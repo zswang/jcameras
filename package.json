@@ -1,6 +1,6 @@
 {
   "name": "jcameras",
-  "version": "0.0.2",
+  "version": "0.0.9",
   "description": "Mouse behavior recording and playing.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",

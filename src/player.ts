@@ -21,6 +21,7 @@ class Player {
   clickPoints: SVGGElement
   menuPoints: SVGGElement
   wheelPoints: SVGGElement
+  doublePoints: SVGGElement
   dragPath: SVGPathElement
   current: SVGGElement
 
@@ -49,6 +50,8 @@ class Player {
     this.clickPoints = this.svg.querySelector('.click-points')
     this.menuPoints = this.svg.querySelector('.menu-points')
     this.wheelPoints = this.svg.querySelector('.wheel-points')
+    this.doublePoints = this.svg.querySelector('.double-points')
+
     this.dragPath = this.svg.querySelector('.drag-path')
     this.current = this.svg.querySelector('.current')
 
@@ -75,18 +78,31 @@ class Player {
     let locus = []
     let click = []
     let moving = []
+    let menu = []
+    let wheel = []
     let drag = []
+    let double = []
     let point
     let downPoint
     let upPoint
     this.records.forEach((item, index) => {
       let targetBox = item.target.getBoundingClientRect()
+      if (!targetBox.width || !targetBox.height) {
+        return
+      }
       point = {
         x: item.position.x - box.left + targetBox.left,
         y: item.position.y - box.top + targetBox.top,
       }
       locus.push(`${point.x},${point.y}`)
       switch (item.type) {
+        case 'dblclick':
+          double.push(
+            `<use xlink:href="#mouse-double" transform="translate(${point.x},${
+              point.y
+            })" />`
+          )
+          break
         case 'mousemove':
           moving.push(`<circle r="1.5" cx="${point.x}" cy="${point.y}" />`)
           if (item.button) {
@@ -111,14 +127,14 @@ class Player {
           )
           break
         case 'mousewheel':
-          click.push(
+          wheel.push(
             `<use xlink:href="#mouse-middle" transform="translate(${point.x},${
               point.y
             })" />`
           )
           break
         case 'contextmenu':
-          click.push(
+          menu.push(
             `<use xlink:href="#mouse-right" transform="translate(${point.x},${
               point.y
             })" />`
@@ -134,6 +150,10 @@ class Player {
     this.dragPath.setAttribute('d', drag.join(' '))
     this.movingPoints.innerHTML = moving.join('')
     this.clickPoints.innerHTML = click.join('')
+    this.menuPoints.innerHTML = menu.join('')
+    this.wheelPoints.innerHTML = wheel.join('')
+    this.doublePoints.innerHTML = double.join('')
+
     if (point && !this.options.hiddenCurrent) {
       this.current.setAttribute('transform', `translate(${point.x},${point.y})`)
     }

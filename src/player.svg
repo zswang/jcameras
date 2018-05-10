@@ -15,6 +15,28 @@
       <use xlink:href="#mouse"></use>
       <path d="M22,18.2772217 L22,29.8016358 C19.4437866,30.2738648 17.5,32.5156861 17.5,35.2060547 L17.5,39 L2.5,39 L2.5,38.7265625 C2.5,27.760376 11.1621094,18.803894 22,18.2772217 Z" />
     </g>
+    <g id="mouse-double" transform="scale(0.3) translate(-25,-30)">
+      <use xlink:href="#mouse"></use>
+      <path d="M22,18.2772217 L22,29.8016358 C19.4437866,30.2738648 17.5,32.5156861 17.5,35.2060547 L17.5,39 L2.5,39 L2.5,38.7265625 C2.5,27.760376 11.1621094,18.803894 22,18.2772217 Z" />
+      <g transform="translate(-35,-10)" stroke="red">
+        <rect x="51.157" y="4.625" width="1.5" height="7.908" />
+        <rect x="51.157" y="19.145" width="1.5" height="7.908" />
+        <rect x="40.693" y="15.089" width="7.908" height="1.5" />
+        <rect x="55.213" y="15.089" width="7.908" height="1.5" />
+        <rect x="56.291" y="8.729" transform="matrix(0.7071 0.7071 -0.7071 0.7071 24.2772 -37.1987)" width="1.5" height="3.953" />
+        <rect x="46.023" y="18.995" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 65.0172 68.8759)" width="1.5" height="3.955" />
+        <rect x="46.024" y="8.729" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 87.418 -14.7974)" width="1.5" height="3.955" />
+        <rect x="56.291" y="18.996" transform="matrix(0.7071 -0.7071 0.7071 0.7071 1.8772 46.4769)" width="1.5" height="3.954" />
+        <rect x="23.945" y="4.625" width="1.5" height="7.908" />
+        <rect x="23.945" y="19.145" width="1.5" height="7.908" />
+        <rect x="13.481" y="15.089" width="7.908" height="1.5" />
+        <rect x="28" y="15.089" width="7.909" height="1.5" />
+        <rect x="29.08" y="8.73" transform="matrix(0.7071 0.7071 -0.7071 0.7071 16.3073 -17.9569)" width="1.5" height="3.953" />
+        <rect x="17.583" y="20.221" transform="matrix(0.7073 -0.7069 0.7069 0.7073 -9.0996 19.9658)" width="3.955" height="1.5" />
+        <rect x="18.812" y="8.727" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -1.8397 16.968)" width="1.5" height="3.955" />
+        <rect x="29.078" y="18.997" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 65.7501 14.7128)" width="1.5" height="3.954" />
+      </g>
+    </g>
     <g id="mouse-middle" transform="scale(0.3) translate(-25,-30)">
       <use xlink:href="#mouse" />
       <path d="M23,31.7060547 C24.9296875,31.7060547 26.5,33.2763672 26.5,35.2060547 L26.5,40.5390625 C26.5,42.46875 24.9296875,44.0390625 23,44.0390625 C21.0703125,44.0390625 19.5,42.46875 19.5,40.5390625 L19.5,35.2060547 C19.5,33.2763672 21.0703125,31.7060547 23,31.7060547 Z" />
@@ -26,11 +48,13 @@
   <path class="locus-path" />
   <g class="moving-points" />
   <g class="click-points" />
+  <g class="double-points" />
   <g class="menu-points" />
   <g class="wheel-points" />
   <path class="drag-path" />
   <g class="current" transform="translate(-1000,-1000)"><use xlink:href="#mouse-pointer" /></g>
   <!--remove desc="preview"-->
-  
+  <use transform="translate(100,200)" xlink:href="#mouse-left"></use>
+  <use transform="translate(100,100)" xlink:href="#mouse-double"></use>
   <!--/remove-->
 </svg>

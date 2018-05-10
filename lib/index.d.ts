@@ -8,6 +8,7 @@ declare class Player {
     clickPoints: SVGGElement;
     menuPoints: SVGGElement;
     wheelPoints: SVGGElement;
+    doublePoints: SVGGElement;
     dragPath: SVGPathElement;
     current: SVGGElement;
     constructor(options?: IPlayerOptions);
