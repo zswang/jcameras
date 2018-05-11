@@ -50,7 +50,8 @@ export interface IRecordEvent {
   /**
    * 滚动尺度
    */
-  detail?: number
+  deltaX?: number
+  deltaY?: number
   /**
    * 按钮
    */
@@ -133,7 +134,8 @@ class Recorder {
     }
 
     if ('mousewheel' === type) {
-      record.detail = e.detail
+      record.deltaX = e['deltaX'] as number
+      record.deltaY = e['deltaY'] as number
     }
 
     // 高频事件

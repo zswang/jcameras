@@ -61,12 +61,12 @@ gulp.task('uglify', () => {
 
 gulp.task('injection', () => {
   gulp
-    .src(`injection.js`)
+    .src(`src/injection/*.js`)
     .pipe(jdists())
     .pipe(uglify())
-    .pipe(rename(`injection.min.js`))
+    .pipe(rename({extname: `.min.js`}))
     .pipe(replace(/^!/, 'void '))
-    .pipe(gulp.dest('lib'))  
+    .pipe(gulp.dest('lib/injection'))  
 })
 
 gulp.task('example', () => {

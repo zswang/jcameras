@@ -18,6 +18,7 @@ declare class Player {
     end(): void;
     render(): void;
     push(record: IRecordEvent): void;
+    clear(): void;
 }
 export interface IPlayerOptions {
     maxRecords?: number;
@@ -55,7 +56,8 @@ export interface IRecordEvent {
     /**
      * 滚动尺度
      */
-    detail?: number;
+    deltaX?: number;
+    deltaY?: number;
     /**
      * 按钮
      */

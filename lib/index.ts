@@ -18,7 +18,9 @@ class Player {
   }
   handleResize = () => {
     let box = document.documentElement.getBoundingClientRect()
-    this.svg.style.height = String(box.height)
+    this.svg.style.height = String(
+      Math.max(box.height, document.documentElement.scrollHeight)
+    )
   }
   start() {
     if (this.svg) {
@@ -126,7 +128,7 @@ class Player {
         point.x < 0 ||
         point.y < 0 ||
         point.x > box.width ||
-        point.y > box.height
+        point.y > Math.max(box.height, document.documentElement.scrollHeight)
       ) {
         return
       }
@@ -141,6 +143,7 @@ class Player {
           break
         case 'mousedown':
           downPoint = point
+          upPoint = null
           break
         case 'mouseup':
           upPoint = point
@@ -193,8 +196,11 @@ class Player {
     if (downPoint && upPoint) {
       drag.push(`M ${downPoint.x},${downPoint.y} L ${upPoint.x},${upPoint.y}`)
     }
-    this.locusPath.setAttribute('d', `M${locus.join(' ')}`)
-    this.locusBackPath.setAttribute('d', `M${locus.join(' ')}`)
+    this.locusPath.setAttribute('d', locus.length ? `M${locus.join(' ')}` : '')
+    this.locusBackPath.setAttribute(
+      'd',
+      locus.length ? `M${locus.join(' ')}` : ''
+    )
     this.dragPath.setAttribute('d', drag.join(' '))
     this.movingPoints.innerHTML = moving.join('')
     this.clickPoints.innerHTML = click.join('')
@@ -207,6 +213,11 @@ class Player {
     while (this.records.length > this.options.maxRecords) {
       this.records.shift()
     }
+    this.render()
+  }
+  clear() {
+    this.records = []
+    this.current.setAttribute('transform', `translate(-1000,-1000)`)
     this.render()
   }
 } /*</function>*/
@@ -264,7 +275,8 @@ export interface IRecordEvent {
   /**
    * 滚动尺度
    */
-  detail?: number
+  deltaX?: number
+  deltaY?: number
   /**
    * 按钮
    */
@@ -336,7 +348,8 @@ class Recorder {
       this.timer = null
     }
     if ('mousewheel' === type) {
-      record.detail = e.detail
+      record.deltaX = e['deltaX'] as number
+      record.deltaY = e['deltaY'] as number
     }
     // 高频事件
     if (['mousemove', 'mousewheel'].indexOf(type) >= 0) {

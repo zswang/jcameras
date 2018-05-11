@@ -32,7 +32,9 @@ class Player {
 
   handleResize = () => {
     let box = document.documentElement.getBoundingClientRect()
-    this.svg.style.height = String(box.height)
+    this.svg.style.height = String(
+      Math.max(box.height, document.documentElement.scrollHeight)
+    )
   }
 
   start() {
@@ -94,7 +96,7 @@ class Player {
         point.x < 0 ||
         point.y < 0 ||
         point.x > box.width ||
-        point.y > box.height
+        point.y > Math.max(box.height, document.documentElement.scrollHeight)
       ) {
         return
       }
@@ -109,6 +111,7 @@ class Player {
           break
         case 'mousedown':
           downPoint = point
+          upPoint = null
           break
         case 'mouseup':
           upPoint = point
@@ -162,8 +165,11 @@ class Player {
       drag.push(`M ${downPoint.x},${downPoint.y} L ${upPoint.x},${upPoint.y}`)
     }
 
-    this.locusPath.setAttribute('d', `M${locus.join(' ')}`)
-    this.locusBackPath.setAttribute('d', `M${locus.join(' ')}`)
+    this.locusPath.setAttribute('d', locus.length ? `M${locus.join(' ')}` : '')
+    this.locusBackPath.setAttribute(
+      'd',
+      locus.length ? `M${locus.join(' ')}` : ''
+    )
     this.dragPath.setAttribute('d', drag.join(' '))
     this.movingPoints.innerHTML = moving.join('')
     this.clickPoints.innerHTML = click.join('')
@@ -178,6 +184,12 @@ class Player {
     while (this.records.length > this.options.maxRecords) {
       this.records.shift()
     }
+    this.render()
+  }
+
+  clear() {
+    this.records = []
+    this.current.setAttribute('transform', `translate(-1000,-1000)`)
     this.render()
   }
 } /*</function>*/
