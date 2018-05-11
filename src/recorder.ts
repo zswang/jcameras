@@ -89,6 +89,7 @@ class Recorder {
   timer: any
 
   handleEvent = (e: MouseEvent) => {
+    // #region 事件记录
     if (!this.options.onRecord) {
       return
     }
@@ -162,6 +163,7 @@ class Recorder {
     }
     emit(this.lastRecord)
     this.lastRecord = null
+    // #endregion
     emit(record)
   }
 

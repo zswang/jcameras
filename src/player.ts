@@ -4,8 +4,12 @@ import { IRecordEvent } from './recorder'
 
 /*<function name="IPlayerOptions">*/
 export interface IPlayerOptions {
+  /** 最多显示的记录数 */
   maxRecords?: number
+  /** 是否隐藏当前鼠标 */
   hiddenCurrent?: boolean
+  /** 是否派发事件 */
+  fireEvent?: boolean
 } /*</function>*/
 
 /*<function name="Player">*/
@@ -185,6 +189,9 @@ class Player {
       this.records.shift()
     }
     this.render()
+    if (record.type === 'click' && this.options.fireEvent) {
+      record.target.click()
+    }
   }
 
   clear() {

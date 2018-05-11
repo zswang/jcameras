@@ -63,6 +63,7 @@ gulp.task('injection', () => {
   gulp
     .src(`src/injection/*.js`)
     .pipe(jdists())
+    .pipe(gulp.dest('lib/injection'))  
     .pipe(uglify())
     .pipe(rename({extname: `.min.js`}))
     .pipe(replace(/^!/, 'void '))

@@ -1,8 +1,10 @@
 void (function() {
   if (window.jcameras_player) {
+    window.jcameras_player.end()
     window.jcameras_player.clear()
   }
   if (window.jcameras_recorder) {
+    window.jcameras_recorder.start()
     return
   }
   var exports = {}
@@ -26,7 +28,7 @@ void (function() {
   //   records = { cursor: 0, rows: [] }
   // }
   var ep = new ElementPath({})
-  window.jcameras_recorder = new Recorder({
+  var recorder = new Recorder({
     onRecord: function(e) {
       records.rows.push({
         type: e.type,
@@ -37,5 +39,7 @@ void (function() {
       })
       sessionStorage[document.location.href] = JSON.stringify(records)
     },
-  }).start()
+  })
+  recorder.start()
+  window.jcameras_recorder = recorder
 })()

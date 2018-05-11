@@ -214,6 +214,9 @@ class Player {
       this.records.shift()
     }
     this.render()
+    if (record.type === 'click' && this.options.fireEvent) {
+      record.target.click()
+    }
   }
   clear() {
     this.records = []
@@ -223,8 +226,12 @@ class Player {
 } /*</function>*/
 /*<function name="IPlayerOptions">*/
 export interface IPlayerOptions {
+  /** 最多显示的记录数 */
   maxRecords?: number
+  /** 是否隐藏当前鼠标 */
   hiddenCurrent?: boolean
+  /** 是否派发事件 */
+  fireEvent?: boolean
 } /*</function>*/
 /*<function name="Recorder">*/
 export const events = [
@@ -307,6 +314,7 @@ class Recorder {
   lastRecord: IRecordEvent = null
   timer: any
   handleEvent = (e: MouseEvent) => {
+    // #region 事件记录
     if (!this.options.onRecord) {
       return
     }
@@ -375,6 +383,7 @@ class Recorder {
     }
     emit(this.lastRecord)
     this.lastRecord = null
+    // #endregion
     emit(record)
   }
   start() {

@@ -21,8 +21,12 @@ declare class Player {
     clear(): void;
 }
 export interface IPlayerOptions {
+    /** 最多显示的记录数 */
     maxRecords?: number;
+    /** 是否隐藏当前鼠标 */
     hiddenCurrent?: boolean;
+    /** 是否派发事件 */
+    fireEvent?: boolean;
 }
 export declare const events: string[];
 export interface IRecordEvent {

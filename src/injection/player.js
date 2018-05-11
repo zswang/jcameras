@@ -1,6 +1,10 @@
 void (function() {
   var player
 
+  if (window.jcameras_recorder) {
+    window.jcameras_recorder.end()
+  }
+
   if (window.jcameras_player) {
     player = window.jcameras_player
     player.repaly()
@@ -59,6 +63,7 @@ void (function() {
   player = new Player({
     hiddenCurrent: false,
     maxRecords: 500,
+    fireEvent: true,
   })
   player.start()
   player.repaly = replay
