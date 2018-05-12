@@ -13,11 +13,30 @@ declare class Player {
     dragPath: SVGPathElement;
     current: SVGGElement;
     constructor(options?: IPlayerOptions);
+    /**
+     * 窗体尺寸改变响应
+     */
     handleResize: () => void;
+    /**
+     * 开始播放
+     */
     start(): void;
+    /**
+     * 结束播放
+     */
     end(): void;
+    /**
+     * 渲染图层
+     */
     render(): void;
+    /**
+     * 增加行为记录
+     * @param record 行为记录
+     */
     push(record: IRecordEvent): void;
+    /**
+     * 清空画布
+     */
     clear(): void;
 }
 export interface IPlayerOptions {

@@ -6,8 +6,7 @@ void (function() {
   }
 
   if (window.jcameras_player) {
-    player = window.jcameras_player
-    player.repaly()
+    window.jcameras_player.replay()
     return
   }
 
@@ -77,7 +76,7 @@ void (function() {
     fireEvent: true,
   })
   player.start()
-  player.repaly = replay
+  player.replay = replay
 
   window.jcameras_player = player
   replay()

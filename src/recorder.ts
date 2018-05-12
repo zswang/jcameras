@@ -76,7 +76,18 @@ export interface IRecorderOptions {
 }
 
 class Recorder {
+  // #region 成员
   options: IRecorderOptions
+
+  /**
+   * 记录开始时间
+   */
+  startAt: number = null
+
+  lastRecord: IRecordEvent = null
+
+  timer: any
+  // #endregion
 
   constructor(options: IRecorderOptions = {}) {
     this.options = {
@@ -85,12 +96,9 @@ class Recorder {
     }
   }
 
-  startAt: number = null
-
-  lastRecord: IRecordEvent = null
-
-  timer: any
-
+  /**
+   * 事件处理
+   */
   handleEvent = (e: MouseEvent) => {
     // #region 事件记录
     if (!this.options.onRecord) {
@@ -186,7 +194,13 @@ class Recorder {
     emit(record)
   }
 
+  /**
+   * 开始记录
+   */
   start() {
+    if (this.startAt) {
+      return
+    }
     this.startAt = Date.now()
     if (this.options.onStart) {
       this.options.onStart()
@@ -196,7 +210,13 @@ class Recorder {
     })
   }
 
+  /**
+   * 结束记录
+   */
   end() {
+    if (!this.startAt) {
+      return
+    }
     this.startAt = null
     if (this.options.onEnd) {
       this.options.onEnd()

@@ -14,6 +14,7 @@ export interface IPlayerOptions {
 
 /*<function name="Player">*/
 class Player {
+  // #region 成员
   svg: SVGElement
   style: HTMLStyleElement
 
@@ -29,11 +30,15 @@ class Player {
   doublePoints: SVGGElement
   dragPath: SVGPathElement
   current: SVGGElement
+  // #endregion
 
   constructor(options: IPlayerOptions = {}) {
     this.options = { maxRecords: 100, hiddenCurrent: false, ...options }
   }
 
+  /**
+   * 窗体尺寸改变响应
+   */
   handleResize = () => {
     let box = document.documentElement.getBoundingClientRect()
     this.svg.style.height = String(
@@ -41,6 +46,9 @@ class Player {
     )
   }
 
+  /**
+   * 开始播放
+   */
   start() {
     if (this.svg) {
       return
@@ -64,6 +72,9 @@ class Player {
     this.handleResize()
   }
 
+  /**
+   * 结束播放
+   */
   end() {
     if (!this.svg) {
       return
@@ -74,6 +85,9 @@ class Player {
     this.svg = this.style = null
   }
 
+  /**
+   * 渲染图层
+   */
   render() {
     if (!this.svg) {
       return
@@ -183,7 +197,14 @@ class Player {
     }
   }
 
+  /**
+   * 增加行为记录
+   * @param record 行为记录
+   */
   push(record: IRecordEvent) {
+    if (!this.svg) {
+      return
+    }
     if (record.type === 'scroll' && this.options.fireEvent) {
       document.documentElement.scrollTop = record.scrollTop
       document.documentElement.scrollLeft = record.scrollLeft
@@ -220,7 +241,13 @@ class Player {
     }
   }
 
+  /**
+   * 清空画布
+   */
   clear() {
+    if (!this.svg) {
+      return
+    }
     this.records = []
     this.current.setAttribute('transform', `translate(-1000,-1000)`)
     this.render()
