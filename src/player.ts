@@ -184,13 +184,39 @@ class Player {
   }
 
   push(record: IRecordEvent) {
+    if (record.type === 'scroll' && this.options.fireEvent) {
+      document.documentElement.scrollTop = record.scrollTop
+      document.documentElement.scrollLeft = record.scrollLeft
+      return
+    }
+    if (!record.target) {
+      return
+    }
     this.records.push(record)
     while (this.records.length > this.options.maxRecords) {
       this.records.shift()
     }
     this.render()
     if (record.type === 'click' && this.options.fireEvent) {
-      record.target.click()
+      var clickEvent = document.createEvent('MouseEvents')
+      clickEvent.initMouseEvent(
+        'click',
+        true,
+        true,
+        window,
+        0,
+        0,
+        0,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      )
+      record.target.dispatchEvent(clickEvent)
     }
   }
 

@@ -37,7 +37,9 @@ export interface IRecordEvent {
     /**
      * 元素坐标
      */
-    target: HTMLElement;
+    target?: HTMLElement;
+    scrollLeft?: number;
+    scrollTop?: number;
     /**
      * 坐标
      */

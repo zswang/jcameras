@@ -30,13 +30,23 @@ void (function() {
   var ep = new ElementPath({})
   var recorder = new Recorder({
     onRecord: function(e) {
-      records.rows.push({
-        type: e.type,
-        path: ep.get(e.target),
-        time: e.time,
-        position: e.position,
-        button: e.button,
-      })
+      if (e.type === 'scroll') {
+        records.rows.push({
+          type: e.type,
+          path: ep.get(e.target),
+          time: e.time,
+          scrollLeft: e.scrollLeft,
+          scrollTop: e.scrollTop,
+        })
+      } else {
+        records.rows.push({
+          type: e.type,
+          path: ep.get(e.target),
+          time: e.time,
+          position: e.position,
+          button: e.button,
+        })
+      }
       sessionStorage[document.location.href] = JSON.stringify(records)
     },
   })

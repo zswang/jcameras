@@ -1,6 +1,6 @@
 {
   "name": "jcameras",
-  "version": "0.0.58",
+  "version": "0.0.71",
   "description": "Mouse behavior recording and playing.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "autoprefixer": "^8.4.1",
     "clean-css": "^4.1.11",
-    "element-path": "^0.0.3",
+    "element-path": "^0.0.7",
     "gulp": "^3.9.1",
     "gulp-examplejs": "0.0.9",
     "gulp-jdists": "^2.0.17",

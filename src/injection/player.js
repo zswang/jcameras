@@ -47,13 +47,24 @@ void (function() {
     }
     timer = setTimeout(function() {
       timer = null
-      player.push({
-        type: row.type,
-        target: ep.query(row.path),
-        time: row.time,
-        position: row.position,
-        button: row.button,
-      })
+      if (row.type === 'scroll') {
+        player.push({
+          type: row.type,
+          target: ep.query(row.path),
+          time: row.time,
+          scrollLeft: row.scrollLeft,
+          scrollTop: row.scrollTop,
+        })
+      } else {
+        player.push({
+          type: row.type,
+          target: ep.query(row.path),
+          time: row.time,
+          position: row.position,
+          button: row.button,
+          path: row.path,
+        })
+      }
       next()
     }, Math.min(row.time - lastRow.time, 1000))
     lastRow = row

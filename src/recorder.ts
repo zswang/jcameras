@@ -9,6 +9,7 @@ export const events = [
   'dblclick',
 
   'mousewheel',
+  'scroll',
 ]
 
 export interface IRecordEvent {
@@ -27,7 +28,9 @@ export interface IRecordEvent {
   /**
    * 元素坐标
    */
-  target: HTMLElement
+  target?: HTMLElement
+  scrollLeft?: number
+  scrollTop?: number
   /**
    * 坐标
    */
@@ -95,7 +98,10 @@ class Recorder {
     }
     const { type, target } = e
     let node = target as Node
-    while (node && node.nodeType !== Node.ELEMENT_NODE) {
+    while (
+      node &&
+      [Node.DOCUMENT_NODE, Node.ELEMENT_NODE].indexOf(node.nodeType) < 0
+    ) {
       //text
       node = node.parentNode
     }
@@ -105,21 +111,34 @@ class Recorder {
     }
 
     let time = Date.now() - this.startAt
-    let box = element.getBoundingClientRect()
-    let x = e.clientX - box.left
-    let y = e.clientY - box.top
-    let record: IRecordEvent = {
-      type: type,
-      target: element,
-      position: {
-        x: x,
-        y: y,
-        tx: x / box.width,
-        ty: y / box.height,
-      },
-      time: time,
-      button:
-        e.which || (e.button & 1 ? 1 : e.button & 2 ? 3 : e.button & 4 ? 2 : 0),
+    let record: IRecordEvent
+    if (type === 'scroll') {
+      let ui = e as UIEvent
+      record = {
+        type: type,
+        time: time,
+        target: element,
+        scrollLeft: document.documentElement.scrollLeft,
+        scrollTop: document.documentElement.scrollTop,
+      }
+    } else {
+      let box = element.getBoundingClientRect()
+      let x = e.clientX - box.left
+      let y = e.clientY - box.top
+      record = {
+        type: type,
+        target: element,
+        position: {
+          x: x,
+          y: y,
+          tx: x / box.width,
+          ty: y / box.height,
+        },
+        time: time,
+        button:
+          e.which ||
+          (e.button & 1 ? 1 : e.button & 2 ? 3 : e.button & 4 ? 2 : 0),
+      }
     }
 
     const emit = record => {
