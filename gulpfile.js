@@ -63,16 +63,16 @@ gulp.task('injection', () => {
   gulp
     .src(`src/injection/*.js`)
     .pipe(jdists())
-    .pipe(gulp.dest('lib/injection'))  
+    .pipe(gulp.dest('lib/injection'))
     .pipe(uglify())
-    .pipe(rename({extname: `.min.js`}))
+    .pipe(rename({ extname: `.min.js` }))
     .pipe(replace(/^!/, 'void '))
-    .pipe(gulp.dest('lib/injection'))  
+    .pipe(gulp.dest('lib/injection'))
 })
 
 gulp.task('example', () => {
   return gulp
-    .src('src/**.ts')
+    .src(['src/**.ts', '!src/index.ts'])
     .pipe(
       jdists({
         trigger: 'example',

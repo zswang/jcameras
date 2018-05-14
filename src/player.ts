@@ -205,9 +205,11 @@ class Player {
     if (!this.svg) {
       return
     }
-    if (record.type === 'scroll' && this.options.fireEvent) {
-      document.documentElement.scrollTop = record.scrollTop
-      document.documentElement.scrollLeft = record.scrollLeft
+    if (record.type === 'scroll') {
+      if (this.options.fireEvent) {
+        document.documentElement.scrollTop = record.scrollTop
+        document.documentElement.scrollLeft = record.scrollLeft
+      }
       return
     }
     if (!record.target) {

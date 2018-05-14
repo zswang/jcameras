@@ -109,12 +109,77 @@ export interface IRecorderOptions {
 }
 declare class Recorder {
     options: IRecorderOptions;
-    constructor(options?: IRecorderOptions);
+    /**
+     * 记录开始时间
+     */
     startAt: number;
     lastRecord: IRecordEvent;
     timer: any;
+    constructor(options?: IRecorderOptions);
+    /**
+     * 事件处理
+     */
     handleEvent: (e: MouseEvent) => void;
+    /**
+     * 开始记录
+     */
     start(): void;
+    /**
+     * 结束记录
+     */
     end(): void;
 }
-export { Player, Recorder };
+declare class Parser {
+    options: IParserOptions;
+    constructor(options?: IParserOptions);
+    parse(expr: string): any;
+    /**
+     * @description
+      ```
+      name        | length | description | note
+      ------------|--------|-------------|-------
+      prefix      | 2      | 数据前缀     |
+      version     | 1      | 数据版本     |
+      session     | 8      | 回话标识     |
+      seq         | 2      | 记录序号     |
+      timestamp   | 8      | 时间戳       |
+      events      | ...    | 事件记录     |
+      ```
+     */
+    stringify(session: ISession): string;
+}
+export interface ICommonEvent {
+    type: string;
+    time: number;
+    path: string;
+    extend: number;
+}
+export interface IPointEvent extends ICommonEvent {
+    position: {
+        x: number;
+        y: number;
+    };
+}
+export interface IScrollEvent extends ICommonEvent {
+    scroll: {
+        left: number;
+        top: number;
+    };
+}
+export interface IResizeEvent extends ICommonEvent {
+    size: {
+        width: number;
+        height: number;
+    };
+}
+export interface ISession {
+    session: string;
+    seq: number;
+    timestamp: number;
+    events: ICommonEvent[];
+}
+export interface IParserOptions {
+    prefix?: string;
+    version?: number;
+}
+export { Player, Recorder, Parser };

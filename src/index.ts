@@ -6,4 +6,8 @@ import { Player } from './player'
 import { Recorder } from './recorder'
 /*</jdists>*/
 
-export { Player, Recorder }
+/*<jdists encoding="fndep" depend="Parser,IParserOptions" import="./parser.ts">*/
+import { Parser } from './parser'
+/*</jdists>*/
+
+export { Player, Recorder, Parser }

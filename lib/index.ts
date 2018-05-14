@@ -227,6 +227,9 @@ class Player {
    * @param record 行为记录
    */
   push(record: IRecordEvent) {
+    if (!this.svg) {
+      return
+    }
     if (record.type === 'scroll' && this.options.fireEvent) {
       document.documentElement.scrollTop = record.scrollTop
       document.documentElement.scrollLeft = record.scrollLeft
@@ -266,6 +269,9 @@ class Player {
    * 清空画布
    */
   clear() {
+    if (!this.svg) {
+      return
+    }
     this.records = []
     this.current.setAttribute('transform', `translate(-1000,-1000)`)
     this.render()
@@ -353,16 +359,24 @@ export interface IRecorderOptions {
   onFilter?: { (element: HTMLElement): boolean }
 }
 class Recorder {
+  // #region 成员
   options: IRecorderOptions
+  /**
+   * 记录开始时间
+   */
+  startAt: number = null
+  lastRecord: IRecordEvent = null
+  timer: any
+  // #endregion
   constructor(options: IRecorderOptions = {}) {
     this.options = {
       thinning: 200,
       ...options,
     }
   }
-  startAt: number = null
-  lastRecord: IRecordEvent = null
-  timer: any
+  /**
+   * 事件处理
+   */
   handleEvent = (e: MouseEvent) => {
     // #region 事件记录
     if (!this.options.onRecord) {
@@ -452,7 +466,13 @@ class Recorder {
     // #endregion
     emit(record)
   }
+  /**
+   * 开始记录
+   */
   start() {
+    if (this.startAt) {
+      return
+    }
     this.startAt = Date.now()
     if (this.options.onStart) {
       this.options.onStart()
@@ -461,7 +481,13 @@ class Recorder {
       document.addEventListener(type, this.handleEvent)
     })
   }
+  /**
+   * 结束记录
+   */
   end() {
+    if (!this.startAt) {
+      return
+    }
     this.startAt = null
     if (this.options.onEnd) {
       this.options.onEnd()
@@ -471,4 +497,79 @@ class Recorder {
     })
   }
 } /*</function>*/
-export { Player, Recorder }
+/*<function name="Parser">*/
+class Parser {
+  options: IParserOptions
+  constructor(options: IParserOptions = {}) {
+    this.options = {
+      prefix: 'ca',
+      version: 0,
+      ...options,
+    }
+  }
+  parse(expr: string): any {
+    return null
+  }
+  /**
+   * @description
+    ```
+    name        | length | description | note
+    ------------|--------|-------------|-------
+    prefix      | 2      | 数据前缀     |
+    version     | 1      | 数据版本     |
+    session     | 8      | 回话标识     |
+    seq         | 2      | 记录序号     |
+    timestamp   | 8      | 时间戳       |
+    events      | ...    | 事件记录     |
+    ```
+   */
+  stringify(session: ISession): string {
+    function short(value: number, len: number) {
+      return `000000000${(value || 0).toString(36)}`.slice(-len)
+    }
+    let result = `${this.options.prefix}${short(this.options.version, 2)}${
+      session.session
+    }${short(session.seq, 2)}${short(
+      Math.floor(session.timestamp / 1000) % 2821109907455 /* {36}zzzzzzzz */,
+      8
+    )}`
+    return result
+  }
+} /*</function>*/
+/*<function name="IParserOptions">*/
+export interface ICommonEvent {
+  type: string
+  time: number
+  path: string
+  extend: number
+}
+export interface IPointEvent extends ICommonEvent {
+  position: {
+    x: number
+    y: number
+  }
+}
+export interface IScrollEvent extends ICommonEvent {
+  scroll: {
+    left: number
+    top: number
+  }
+}
+export interface IResizeEvent extends ICommonEvent {
+  size: {
+    width: number
+    height: number
+  }
+}
+export interface ISession {
+  session: string
+  seq: number
+  timestamp: number
+  events: ICommonEvent[]
+}
+export interface IParserOptions {
+  prefix?: string
+  version?: number
+}
+/*</function>*/
+export { Player, Recorder, Parser }

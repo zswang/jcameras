@@ -8,9 +8,6 @@ void (function() {
 
   new jcameras.Recorder({
     onRecord: function(e) {
-      if (e.type === 'mousewheel') {
-        console.log(e)
-      }
       player.push(e)
     },
   }).start()
