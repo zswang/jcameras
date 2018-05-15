@@ -41,6 +41,19 @@ export interface IParserOptions {
 /*</function>*/
 
 /*<function name="Parser">*/
+const shortEvents = {
+  mousemove: 'm',
+  mousedown: 'd',
+  mouseup: 'u',
+
+  contextmenu: 'r',
+  click: 'c',
+  dblclick: 'l',
+
+  mousewheel: 'w',
+  scroll: 's',
+}
+
 class Parser {
   options: IParserOptions
 
@@ -65,7 +78,21 @@ class Parser {
     }${short(session.seq, 2)}${short(
       Math.floor(session.timestamp / 1000) % 2821109907455 /* {36}zzzzzzzz */,
       8
-    )}`
+    )}${session.events
+      .map(event => {
+        let shortType = shortEvents[event.type]
+        switch (shortType) {
+          case 's':
+            return `${shortType}`
+          default:
+            let pointEvent = event as IPointEvent
+            return `${shortType}${short(pointEvent.position.x, 2)}${short(
+              pointEvent.position.y,
+              2
+            )}`
+        }
+      })
+      .join('!')}`
     return result
   }
 } /*</function>*/

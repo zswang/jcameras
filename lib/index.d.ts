@@ -133,19 +133,6 @@ declare class Parser {
     options: IParserOptions;
     constructor(options?: IParserOptions);
     parse(expr: string): any;
-    /**
-     * @description
-      ```
-      name        | length | description | note
-      ------------|--------|-------------|-------
-      prefix      | 2      | 数据前缀     |
-      version     | 1      | 数据版本     |
-      session     | 8      | 回话标识     |
-      seq         | 2      | 记录序号     |
-      timestamp   | 8      | 时间戳       |
-      events      | ...    | 事件记录     |
-      ```
-     */
     stringify(session: ISession): string;
 }
 export interface ICommonEvent {
