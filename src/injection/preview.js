@@ -1,5 +1,10 @@
 void (function() {
   /*<jdists import="../../lib/index.js" />*/
+  if (window.jcameras_preview) {
+    window.jcameras_preview.replay()
+    return
+  }
+
   var player = new jcameras.Player({
     hiddenCurrent: true,
     maxRecords: 500,
@@ -11,4 +16,10 @@ void (function() {
       player.push(e)
     },
   }).start()
+
+  window.jcameras_preview = {
+    replay: function () {
+      player.clear()
+    }
+  }
 })()
