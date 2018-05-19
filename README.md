@@ -6,6 +6,8 @@ Mouse behavior recording and playing.
 
 ![show](./document/jcameras.gif)
 
+* [Add to bookmarklet](https://penjs.net/element/)
+
 ## data
 
 ### long
@@ -14,7 +16,7 @@ Mouse behavior recording and playing.
 {
   "prefix": "ht",
   "version": "12",
-  "session": "", // 回话标识
+  "session": "", // 会话标识
   "seq": 1, // 序号
   "timestamp": 12345678,
   "events": [
@@ -39,7 +41,7 @@ name        | length | description | note
 ------------|--------|-------------|-------
 prefix      | 2      | 数据前缀     |
 version     | 1      | 数据版本     |
-session     | 8      | 回话标识     |
+session     | 8      | 会话标识     |
 seq         | 2      | 记录序号     |
 timestamp   | 8      | 时间戳       |
 events      | ...    | 事件记录     |
